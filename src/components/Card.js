@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { MdOutlineEdit, MdDeleteOutline } from "react-icons/md";
 
@@ -8,6 +8,7 @@ const Card = () => {
   const [value, setValue] = useState(false);
   const [edit, setEdit] = useState({});
   const [text, setText] = useState("");
+  const refContainer = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,6 +71,10 @@ const Card = () => {
     setItem("");
   };
 
+  useEffect(() => {
+    refContainer.current.focus();
+  });
+
   return (
     <div className="card">
       {text != "" && <article>{text}</article>}
@@ -80,6 +85,7 @@ const Card = () => {
           placeholder="eg. Eggs"
           onChange={(e) => setItem(e.target.value)}
           value={item}
+          ref={refContainer}
         />
         <button type="submit" onClick={edit.name ? editItem : handleSubmit}>
           {edit.name ? "Save" : "Submit"}
